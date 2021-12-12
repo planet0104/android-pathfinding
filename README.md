@@ -2,6 +2,14 @@
 
 Android pathfinding
 
+[![](https://jitpack.io/v/planet0104/android-pathfinding.svg)](https://jitpack.io/#planet0104/android-pathfinding)
+
+```gradle
+dependencies {
+        implementation 'com.github.planet0104:android-pathfinding:1.0.0'
+}
+```
+
 
 ```java
 int[][] grid = new int[][]{

@@ -8,6 +8,8 @@ public class PathFinding {
         System.loadLibrary("android_pathfinding");
     }
 
+    public static native String version();
+
     /**
      * 加载地图
      * @param grid 表格地图

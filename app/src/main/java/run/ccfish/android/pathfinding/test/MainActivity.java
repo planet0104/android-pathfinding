@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         };
 
         System.out.println("地图大小:"+grid[0].length + "x" + grid.length);
+        System.out.println("版本号："+PathFinding.version());
 
         PathFinding.loadMap(grid);
 

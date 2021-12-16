@@ -5,6 +5,8 @@ use bracket_pathfinding::prelude::{
 use once_cell::sync::Lazy;
 use std::{collections::HashMap, sync::RwLock};
 
+pub const VERSION:&str = "1.0.1";
+
 // Map
 
 pub struct Map {

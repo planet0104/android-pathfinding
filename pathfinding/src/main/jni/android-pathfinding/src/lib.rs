@@ -1,10 +1,11 @@
 use anyhow::{anyhow, Result};
 use bracket_pathfinding::prelude::Point;
 use jni::objects::{JObject, JString};
-use jni::sys::{jint, jintArray};
+use jni::sys::{jint, jintArray, jstring};
 use jni::{objects::JClass, sys::jobjectArray};
 use jni::{JNIEnv, JavaVM};
 use log::{error, info};
+use pathfinding::VERSION;
 
 mod pathfinding;
 
@@ -33,6 +34,21 @@ fn jobject_array_to_grid<'a>(env: &'a JNIEnv, grid_obj: jobjectArray) -> Result<
         Err(anyhow!("地图行长度不一致"))
     } else {
         Ok(grid)
+    }
+}
+
+#[no_mangle]
+pub extern "C" fn Java_run_ccfish_android_pathfinding_PathFinding_version<'a>(env: JNIEnv, _activity: JClass) -> jstring {
+    let result = (|| -> Result<JString> {
+        Ok(JString::from(env.new_string(VERSION)?))
+    })();
+
+    match result{
+        Ok(ver) => ver.into_inner(),
+        Err(err) => {
+            error!("{:?}", &err);
+            JObject::null().into_inner()
+        }
     }
 }
 

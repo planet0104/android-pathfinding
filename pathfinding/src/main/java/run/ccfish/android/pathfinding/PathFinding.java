@@ -34,6 +34,16 @@ public class PathFinding {
     public static native int[] findPath(int x1, int y1, int x2, int y2);
 
     /**
+     * 获取两点之间的直线线段
+     * @param x1 起点x
+     * @param y1 起点y
+     * @param x2 终点x
+     * @param y2 终点y
+     * @return 返回所有点的坐标[x,y,x,y...]
+     */
+    public static native int[] getLineSegment(int x1, int y1, int x2, int y2);
+
+    /**
      * 查找路径
      * @param key 地图的key
      * @param x1 起点x

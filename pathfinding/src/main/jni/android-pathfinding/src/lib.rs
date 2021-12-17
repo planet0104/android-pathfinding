@@ -5,7 +5,7 @@ use jni::sys::{jint, jintArray, jstring};
 use jni::{objects::JClass, sys::jobjectArray};
 use jni::{JNIEnv, JavaVM};
 use log::{error, info};
-use pathfinding::VERSION;
+use pathfinding::{VERSION, get_line_segment};
 
 mod pathfinding;
 
@@ -156,6 +156,35 @@ pub extern "C" fn Java_run_ccfish_android_pathfinding_PathFinding_findPathInMap<
             }
             None => Ok(JObject::null()),
         }
+    })() {
+        Ok(path) => path.into_inner(),
+        Err(err) => {
+            error!("{:?}", &err);
+            let _ = env.throw_new("java/lang/Exception", format!("{:?}", err));
+            JObject::null().into_inner()
+        }
+    }
+}
+
+#[no_mangle]
+pub extern "C" fn Java_run_ccfish_android_pathfinding_PathFinding_getLineSegment<'a>(
+    env: JNIEnv,
+    _activity: JClass,
+    x1: jint,
+    y1: jint,
+    x2: jint,
+    y2: jint,
+) -> jintArray {
+    match (|| -> Result<JObject> {
+        let path = get_line_segment((x1 as f32, y1 as f32), (x2 as f32, y2 as f32));
+        let mut val_arr = Vec::with_capacity(path.len()*2);
+        for point in path {
+            val_arr.push(point.0);
+            val_arr.push(point.1);
+        }
+        let arr = env.new_int_array(val_arr.len() as i32)?;
+        env.set_int_array_region(arr, 0, &val_arr)?;
+        Ok(JObject::from(arr))
     })() {
         Ok(path) => path.into_inner(),
         Err(err) => {

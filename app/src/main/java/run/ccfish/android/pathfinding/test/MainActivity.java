@@ -99,6 +99,15 @@ public class MainActivity extends AppCompatActivity {
             canvas.drawRect(new Rect(rx, ry, rx+gridSize, ry+gridSize), paint);
         }
 
+        //绘制线段
+        points = PathFinding.getLineSegment(startX, startY, 15, 14);
+        paint.setColor(Color.parseColor("#55faff00"));
+        for(int i=0; i<points.length; i+=2){
+            rx = points[i]*gridSize;
+            ry = points[i+1]*gridSize;
+            canvas.drawRect(new Rect(rx, ry, rx+gridSize, ry+gridSize), paint);
+        }
+
         imgMap.setImageBitmap(bitmap);
     }
 

@@ -2,10 +2,11 @@ use anyhow::{anyhow, Result};
 use bracket_pathfinding::prelude::{
     a_star_search, Algorithm2D, BaseMap, DistanceAlg, Point, SmallVec,
 };
+use imageproc::drawing::BresenhamLineIter;
 use once_cell::sync::Lazy;
 use std::{collections::HashMap, sync::RwLock};
 
-pub const VERSION:&str = "1.0.1";
+pub const VERSION:&str = "1.0.5";
 
 // Map
 
@@ -207,4 +208,10 @@ fn test_find() -> Result<()> {
     assert!(points.is_some());
 
     Ok(())
+}
+
+/// 获取两点之间的线段坐标
+pub fn get_line_segment(start: (f32, f32), end: (f32, f32)) -> Vec<(i32, i32)>{
+    let line_iterator = BresenhamLineIter::new(start, end);
+    line_iterator.collect()
 }
